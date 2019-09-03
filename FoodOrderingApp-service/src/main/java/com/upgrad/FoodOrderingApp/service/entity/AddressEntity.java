@@ -16,7 +16,7 @@ public class AddressEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "uuid")
@@ -41,7 +41,7 @@ public class AddressEntity {
     private String pincode;
 
     @Column(name = "active")
-    private Integer active;
+    private Integer active = 1;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id")

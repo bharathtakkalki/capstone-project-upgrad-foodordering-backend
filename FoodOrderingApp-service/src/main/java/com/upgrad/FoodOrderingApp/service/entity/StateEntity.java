@@ -8,11 +8,15 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "state",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+
+        @NamedQuery(name = "getStateByUuid", query = "SELECT s from StateEntity s where s.uuid = :uuid"),
+})
 public class StateEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
