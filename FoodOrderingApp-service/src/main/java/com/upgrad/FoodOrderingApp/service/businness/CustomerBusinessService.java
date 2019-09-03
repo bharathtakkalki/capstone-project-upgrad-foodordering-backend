@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -91,6 +92,30 @@ public class CustomerBusinessService {
             throw new AuthenticationFailedException("ATH-002","Invalid Credentials");
         }
 
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CustomerAuthEntity customerLogout(String accessToken)throws AuthenticationFailedException{
+        CustomerAuthEntity customerAuthEntity = customerAuthDao.getCustomerAuthByAccessToken(accessToken);
+
+        if(customerAuthEntity == null){
+            throw new AuthenticationFailedException("ATHR-001","Customer is not Logged in.");
+        }
+
+        if(customerAuthEntity.getLogoutAt() != null){
+            throw new AuthenticationFailedException("ATHR-002","Customer is logged out. Log in again to access this endpoint.");
+        }
+
+        final ZonedDateTime now = ZonedDateTime.now();
+
+        if(customerAuthEntity.getExpiresAt().compareTo(now) < 0){
+            throw new AuthenticationFailedException("ATHR-003","Your session is expired. Log in again to access this endpoint.");
+        }
+
+        customerAuthEntity.setLogoutAt(ZonedDateTime.now());
+
+        CustomerAuthEntity upatedCustomerAuthEntity = customerAuthDao.customerLogout(customerAuthEntity);
+        return upatedCustomerAuthEntity;
     }
 
 

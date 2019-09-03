@@ -2,6 +2,7 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 
 import com.upgrad.FoodOrderingApp.api.model.LoginResponse;
+import com.upgrad.FoodOrderingApp.api.model.LogoutResponse;
 import com.upgrad.FoodOrderingApp.api.model.SignupCustomerRequest;
 import com.upgrad.FoodOrderingApp.api.model.SignupCustomerResponse;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Base64;
 import java.util.UUID;
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -26,8 +29,8 @@ public class CustomerController {
     @Autowired
     CustomerBusinessService customerBusinessService;
 
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST,path = "/",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+    @RequestMapping(method = RequestMethod.POST,path = "",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignupCustomerResponse> signUpCustomer(@RequestBody(required = false)  final SignupCustomerRequest signupCustomerRequest)throws SignUpRestrictedException {
         CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setFirstName(signupCustomerRequest.getFirstName());
@@ -52,7 +55,7 @@ public class CustomerController {
         CustomerAuthEntity customerAuthEntity = customerBusinessService.authenticateCustomer(decodedArray[0],decodedArray[1]);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("access_token", customerAuthEntity.getAccessToken());
+        headers.add("access-token", customerAuthEntity.getAccessToken());
 
         LoginResponse loginResponse = new LoginResponse()
                 .id(customerAuthEntity.getCustomer().getUuid())
@@ -63,6 +66,17 @@ public class CustomerController {
                 .message("LOGGED IN SUCCESSFULLY");
 
         return new ResponseEntity<LoginResponse>(loginResponse,headers,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST,path = "/logout",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<LogoutResponse> customerLogout (@RequestHeader("authorization")final String authorization)throws AuthenticationFailedException{
+        CustomerAuthEntity customerAuthEntity =  customerBusinessService.customerLogout(authorization);
+
+        LogoutResponse logoutResponse = new LogoutResponse()
+                .id(customerAuthEntity.getCustomer().getUuid())
+                .message("LOGGED OUT SUCCESSFULLY");
+
+        return new ResponseEntity<LogoutResponse>(logoutResponse,HttpStatus.OK);
     }
 
 }
