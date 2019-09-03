@@ -31,6 +31,11 @@ public class CustomerDao {
         return customerEntity;
     }
 
+    public CustomerEntity updateCustomer(CustomerEntity customerToBeUpdated){
+        entityManager.merge(customerToBeUpdated);
+        return customerToBeUpdated;
+    }
+
 
     public CustomerEntity getCustomerByUuid (final String uuid){
         try {
