@@ -16,8 +16,8 @@ public class CustomerAuthEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "uuid")
     @Size (max = 200)
@@ -44,11 +44,11 @@ public class CustomerAuthEntity {
     private ZonedDateTime expiresAt;
 
     public Integer getId() {
-        return Id;
+        return this.id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getUuid() {
