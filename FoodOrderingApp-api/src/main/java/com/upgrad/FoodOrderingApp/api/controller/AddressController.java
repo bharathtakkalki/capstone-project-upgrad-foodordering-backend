@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/")
 public class AddressController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class AddressController {
     CustomerService customerService;
 
 
-    @RequestMapping(method = RequestMethod.POST,path = "",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.POST,path = "/address",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization, @RequestBody(required = false)SaveAddressRequest saveAddressRequest)throws AuthorizationFailedException, AddressNotFoundException, SaveAddressException {
         String accessToken = authorization.split("Bearer ")[1];
 
@@ -62,7 +62,7 @@ public class AddressController {
         return new ResponseEntity<SaveAddressResponse>(saveAddressResponse,HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET,path = "/customer",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET,path = "/address/customer",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AddressListResponse> getAllSavedAddress(@RequestHeader("authorization")final String authorization)throws AuthorizationFailedException{
         String accessToken = authorization.split("Bearer ")[1];
 
@@ -86,11 +86,10 @@ public class AddressController {
         });
 
         AddressListResponse addressListResponse = new AddressListResponse().addresses(addressLists);
-        System.out.println(HttpStatus.FORBIDDEN);
         return new ResponseEntity<AddressListResponse>(addressListResponse,HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE,path = "/{address_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE,path = "/address/{address_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<DeleteAddressResponse> deleteSavedAddress(@RequestHeader ("authorization") final String authorization,@PathVariable(value = "address_id")final String addressUuid)throws AuthorizationFailedException,AddressNotFoundException{
         String accessToken = authorization.split("Bearer ")[1];
 
@@ -107,6 +106,25 @@ public class AddressController {
         return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse,HttpStatus.OK);
 
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET,path = "/states",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<StatesListResponse> getAllStates(){
+        List<StateEntity> stateEntities = addressService.getAllStates();
+        if(!stateEntities.isEmpty()) {
+            List<StatesList> statesLists = new LinkedList<>();
+            stateEntities.forEach(stateEntity -> {
+                StatesList statesList = new StatesList()
+                        .id(UUID.fromString(stateEntity.getStateUuid()))
+                        .stateName(stateEntity.getStateName());
+                statesLists.add(statesList);
+            });
+
+            StatesListResponse statesListResponse = new StatesListResponse().states(statesLists);
+            return new ResponseEntity<StatesListResponse>(statesListResponse, HttpStatus.OK);
+        }else
+
+            return new ResponseEntity<StatesListResponse>(new StatesListResponse(),HttpStatus.OK);
     }
 
 
