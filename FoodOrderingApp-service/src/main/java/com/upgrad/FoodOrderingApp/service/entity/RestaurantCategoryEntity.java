@@ -10,12 +10,16 @@ import java.util.AbstractCollection;
 
 @Entity
 @Table(name = "restaurant_category")
+@NamedQueries({
+
+        @NamedQuery(name = "getCategoriesByRestaurant",query = "SELECT r from RestaurantCategoryEntity r where r.restaurant= :restaurant ORDER BY r.category.categoryName ASC "),
+})
 public class RestaurantCategoryEntity {
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 

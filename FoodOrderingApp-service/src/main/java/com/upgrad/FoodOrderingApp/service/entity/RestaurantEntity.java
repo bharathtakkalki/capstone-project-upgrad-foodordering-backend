@@ -7,15 +7,21 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "restaurant",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+
+        @NamedQuery(name = "restaurantsByRating",query = "SELECT r from RestaurantEntity r ORDER BY r.customerRating DESC"),
+        @NamedQuery(name = "getRestaurantByUuid",query = "SELECT r from RestaurantEntity r where r.uuid = :uuid"),
+})
 public class RestaurantEntity {
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "uuid")
@@ -34,13 +40,13 @@ public class RestaurantEntity {
 
     @Column(name = "customer_rating")
     @NotNull
-    private Float customerRating;
+    private BigDecimal customerRating;
 
     @Column(name = "average_price_for_two")
     @NotNull
     private Integer averagePriceForTwo;
 
-    @Column(name = "number_of_customer_rated")
+    @Column(name = "number_of_customers_rated")
     @NotNull
     private Integer numberOfCustomerRated;
 
@@ -81,11 +87,11 @@ public class RestaurantEntity {
         this.photoURL = photoURL;
     }
 
-    public Float getCustomerRating() {
+    public BigDecimal getCustomerRating() {
         return customerRating;
     }
 
-    public void setCustomerRating(Float customerRating) {
+    public void setCustomerRating(BigDecimal customerRating) {
         this.customerRating = customerRating;
     }
 

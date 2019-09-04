@@ -16,7 +16,8 @@ public class RestaurantServices {
     RestaurantDao restaurantDao;
 
     public List<RestaurantEntity> restaurantsByRating(){
-        return new LinkedList<RestaurantEntity>();
+        List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantsByRating();
+        return restaurantEntities;
     }
 
 
