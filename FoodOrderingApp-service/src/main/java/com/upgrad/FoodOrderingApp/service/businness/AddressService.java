@@ -76,6 +76,7 @@ public class AddressService {
         return  stateEntity;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public CustomerAddressEntity saveCustomerAddressEntity(CustomerEntity customerEntity,AddressEntity addressEntity){
         CustomerAddressEntity customerAddressEntity = new CustomerAddressEntity();
         customerAddressEntity.setCustomer(customerEntity);
@@ -85,4 +86,28 @@ public class AddressService {
 
     }
 
+    public AddressEntity getAddressByUUID(String addressUuid,CustomerEntity customerEntity)throws AuthorizationFailedException,AddressNotFoundException{
+        if(addressUuid == null){
+            throw new AddressNotFoundException("ANF-005","Address id can not be empty");
+        }
+        AddressEntity addressEntity = addressDao.getAddressByUuid(addressUuid);
+        if (addressEntity == null){
+            throw new AddressNotFoundException("ANF-003","No address by this id");
+        }
+
+        CustomerAddressEntity customerAddressEntity = customerAddressDao.getCustomerAddressByAddress(addressEntity);
+
+        if(customerAddressEntity.getCustomer().getUuid() == customerEntity.getUuid()){
+            return addressEntity;
+        }else{
+            throw new AuthorizationFailedException("ATHR-004","You are not authorized to view/update/delete any one else's address");
+        }
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AddressEntity deleteAddress(AddressEntity addressEntity) {
+        AddressEntity deletedAddressEntity = addressDao.deleteAddress(addressEntity);
+        return deletedAddressEntity;
+    }
 }

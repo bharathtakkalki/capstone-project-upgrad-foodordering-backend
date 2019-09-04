@@ -183,7 +183,7 @@ public class AddressControllerTest {
         verify(mockAddressService, times(1)).saveAddress(any(), any());
     }
 
-/*
+
     // ------------------------------------------ DELETE /address/{address_id} ------------------------------------------
 
     //This test case passes when you can successfully delete an address.
@@ -197,7 +197,7 @@ public class AddressControllerTest {
 
         final AddressEntity deletedAddressEntity = new AddressEntity();
         final String uuid = UUID.randomUUID().toString();
-        deletedAddressEntity.setStateUuid(uuid);
+        deletedAddressEntity.setUuid(uuid);
         when(mockAddressService.deleteAddress(addressEntity)).thenReturn(deletedAddressEntity);
 
         mockMvc
@@ -305,7 +305,7 @@ public class AddressControllerTest {
         verify(mockAddressService, times(1)).getAddressByUUID("82849cd5-106e-4b34-b9bf-94954c6ff527", customerEntity);
         verify(mockAddressService, times(0)).deleteAddress(any());
     }
-*/
+/*
     // ------------------------------------------ GET /address/customer ------------------------------------------
 
     //This test case passes when you are able to retrieve all the saved address of a customer.

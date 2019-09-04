@@ -69,7 +69,7 @@ public class AddressController {
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
         List<AddressEntity> addressEntities = addressService.getAllAddress(customerEntity);
-        //Collections.reverse(addressEntities);
+        Collections.reverse(addressEntities);
         List<AddressList> addressLists = new LinkedList<>();
         addressEntities.forEach(addressEntity -> {
             AddressListState addressListState = new AddressListState()
@@ -88,6 +88,25 @@ public class AddressController {
         AddressListResponse addressListResponse = new AddressListResponse().addresses(addressLists);
         System.out.println(HttpStatus.FORBIDDEN);
         return new ResponseEntity<AddressListResponse>(addressListResponse,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE,path = "/{address_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<DeleteAddressResponse> deleteSavedAddress(@RequestHeader ("authorization") final String authorization,@PathVariable(value = "address_id")final String addressUuid)throws AuthorizationFailedException,AddressNotFoundException{
+        String accessToken = authorization.split("Bearer ")[1];
+
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+
+        AddressEntity addressEntity = addressService.getAddressByUUID(addressUuid,customerEntity);
+
+        AddressEntity deletedAddressEntity = addressService.deleteAddress(addressEntity);
+
+        DeleteAddressResponse deleteAddressResponse = new DeleteAddressResponse()
+                .id(UUID.fromString(deletedAddressEntity.getUuid()))
+                .status("ADDRESS DELETED SUCCESSFULLY");
+
+        return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse,HttpStatus.OK);
+
+
     }
 
 
