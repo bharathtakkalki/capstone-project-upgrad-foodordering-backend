@@ -5,12 +5,9 @@ import com.upgrad.FoodOrderingApp.api.model.RestaurantList;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantListResponse;
 import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
-//import com.upgrad.FoodOrderingApp.service.businness.ItemService;
+import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
-import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -50,8 +47,8 @@ public class RestaurantControllerTest {
     @MockBean
     private RestaurantService mockRestaurantService;
 
-    //@MockBean
-    //private ItemService mockItemService;
+    @MockBean
+    private ItemService mockItemService;
 
     @MockBean
     private CategoryService mockCategoryService;
@@ -59,7 +56,7 @@ public class RestaurantControllerTest {
     @MockBean
     private CustomerService mockCustomerService;
 
- /*   // ------------------------------------------ GET /restaurant/{restaurant_id} ------------------------------------------
+    // ------------------------------------------ GET /restaurant/{restaurant_id} ------------------------------------------
 
     //This test case passes when you get restaurant details based on restaurant id.
     @Test
@@ -118,7 +115,7 @@ public class RestaurantControllerTest {
         verify(mockCategoryService, times(0)).getCategoriesByRestaurant(anyString());
         verify(mockItemService, times(0)).getItemsByCategoryAndRestaurant(anyString(), anyString());
     }
-*/
+
     // ------------------------------------------ GET /restaurant/name/{restaurant_name} ------------------------------------------
 
     //This test case passes when you are able to fetch restaurants by the name you provided.
@@ -433,17 +430,17 @@ public class RestaurantControllerTest {
                 .updateRestaurantRating(restaurantEntity, 5.5);
     }
 
-    // ------------------------------------------ POJO builders ------------------------------------------
+  */  // ------------------------------------------ POJO builders ------------------------------------------
 
     private ItemEntity getItemEntity() {
         final ItemEntity itemEntity = new ItemEntity();
         final String itemId = UUID.randomUUID().toString();
         itemEntity.setUuid(itemId);
         itemEntity.setItemName("someItem");
-        itemEntity.setType(NON_VEG);
+        itemEntity.setType("NON_VEG");
         itemEntity.setPrice(200);
         return itemEntity;
-    }*/
+    }
 
     private CategoryEntity getCategoryEntity() {
         final CategoryEntity categoryEntity = new CategoryEntity();

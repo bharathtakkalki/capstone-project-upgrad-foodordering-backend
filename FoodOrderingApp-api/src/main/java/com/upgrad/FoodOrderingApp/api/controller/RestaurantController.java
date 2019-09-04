@@ -182,10 +182,10 @@ public class RestaurantController {
     @RequestMapping(method = RequestMethod.GET,path = "/{restaurant_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
      public ResponseEntity<RestaurantDetailsResponse>getRestaurantByRestaurantId(@PathVariable(value = "restaurant_id") final String restaurantUuid)throws RestaurantNotFoundException{
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
-        List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantEntity.getUuid());
+        List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantUuid);
         List<CategoryList> categoryLists = new LinkedList<>();
         for (CategoryEntity categoryEntity:categoryEntities){
-           List<ItemEntity> itemEntities = itemService.getItemsByCategoryAndRestaurant(restaurantEntity.getUuid() ,categoryEntity.getUuid());
+           List<ItemEntity> itemEntities = itemService.getItemsByCategoryAndRestaurant(restaurantUuid ,categoryEntity.getUuid());
             List<ItemList> itemLists = new LinkedList<>();
            itemEntities.forEach(itemEntity -> {
                if(itemEntity.getType().equals("0")){
