@@ -109,9 +109,9 @@ public class AddressController {
     }
 
     @RequestMapping(method = RequestMethod.GET,path = "/states",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<StatesListResponse> getAllStates(){
+    public ResponseEntity<StatesListResponse> getAllStates() {
         List<StateEntity> stateEntities = addressService.getAllStates();
-        if(!stateEntities.isEmpty()) {
+        if (!stateEntities.isEmpty()) {
             List<StatesList> statesLists = new LinkedList<>();
             stateEntities.forEach(stateEntity -> {
                 StatesList statesList = new StatesList()
@@ -122,9 +122,10 @@ public class AddressController {
 
             StatesListResponse statesListResponse = new StatesListResponse().states(statesLists);
             return new ResponseEntity<StatesListResponse>(statesListResponse, HttpStatus.OK);
-        }else
+        } else {
 
-            return new ResponseEntity<StatesListResponse>(new StatesListResponse(),HttpStatus.OK);
+            return new ResponseEntity<StatesListResponse>(new StatesListResponse(), HttpStatus.OK);
+        }
     }
 
 

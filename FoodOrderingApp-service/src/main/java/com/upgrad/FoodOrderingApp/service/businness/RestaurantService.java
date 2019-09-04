@@ -20,6 +20,11 @@ public class RestaurantService {
         return restaurantEntities;
     }
 
+    public List<RestaurantEntity> restaurantsByName(String restaurantName){
+        List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantsByName(restaurantName);
+        return restaurantEntities;
+    }
+
 
 
 }
