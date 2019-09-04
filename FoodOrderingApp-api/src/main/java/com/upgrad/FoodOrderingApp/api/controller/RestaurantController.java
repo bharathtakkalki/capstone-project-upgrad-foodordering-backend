@@ -5,8 +5,8 @@ import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponseAddress;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponseAddressState;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantList;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantListResponse;
-import com.upgrad.FoodOrderingApp.service.businness.CategoryServices;
-import com.upgrad.FoodOrderingApp.service.businness.RestaurantServices;
+import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
+import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +17,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.*;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
     @Autowired
-    RestaurantServices restaurantServices;
+    RestaurantService restaurantService;
 
     @Autowired
-    CategoryServices categoryServices;
+    CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET,path = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse>getAllRestaurants(){
 
-        List<RestaurantEntity> restaurantEntities = restaurantServices.restaurantsByRating();
+        List<RestaurantEntity> restaurantEntities = restaurantService.restaurantsByRating();
         List<RestaurantList> restaurantLists = new LinkedList<>();
         for (RestaurantEntity restaurantEntity : restaurantEntities) {
-            List<CategoryEntity> categoryEntities = categoryServices.getCategoriesByRestaurant(restaurantEntity.getUuid());
+            List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantEntity.getUuid());
             String categories = new String();
             ListIterator<CategoryEntity> listIterator = categoryEntities.listIterator();
             while (listIterator.hasNext()){
@@ -62,11 +62,11 @@ public class RestaurantController {
             RestaurantList restaurantList = new RestaurantList()
                     .id(UUID.fromString(restaurantEntity.getUuid()))
                     .restaurantName(restaurantEntity.getRestaurantName())
-                    .averagePrice(restaurantEntity.getAveragePriceForTwo())
+                    .averagePrice(restaurantEntity.getAvgPrice())
                     .categories(categories)
-                    .customerRating(restaurantEntity.getCustomerRating())
-                    .numberCustomersRated(restaurantEntity.getNumberOfCustomerRated())
-                    .photoURL(restaurantEntity.getPhotoURL())
+                    .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
+                    .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                    .photoURL(restaurantEntity.getPhotoUrl())
                     .address(restaurantDetailsResponseAddress);
 
             restaurantLists.add(restaurantList);

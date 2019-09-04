@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -36,19 +35,19 @@ public class RestaurantEntity {
 
     @Column(name = "photo_url")
     @Size(max = 255)
-    private String photoURL;
+    private String photoUrl;
 
     @Column(name = "customer_rating")
     @NotNull
-    private BigDecimal customerRating;
+    private double customerRating;
 
     @Column(name = "average_price_for_two")
     @NotNull
-    private Integer averagePriceForTwo;
+    private Integer avgPrice;
 
     @Column(name = "number_of_customers_rated")
     @NotNull
-    private Integer numberOfCustomerRated;
+    private Integer numberCustomersRated;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
@@ -79,36 +78,36 @@ public class RestaurantEntity {
         this.restaurantName = restaurantName;
     }
 
-    public String getPhotoURL() {
-        return photoURL;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public BigDecimal getCustomerRating() {
+    public double getCustomerRating() {
         return customerRating;
     }
 
-    public void setCustomerRating(BigDecimal customerRating) {
+    public void setCustomerRating(double customerRating) {
         this.customerRating = customerRating;
     }
 
-    public Integer getAveragePriceForTwo() {
-        return averagePriceForTwo;
+    public Integer getAvgPrice() {
+        return avgPrice;
     }
 
-    public void setAveragePriceForTwo(Integer averagePriceForTwo) {
-        this.averagePriceForTwo = averagePriceForTwo;
+    public void setAvgPrice(Integer avgPrice) {
+        this.avgPrice = avgPrice;
     }
 
-    public Integer getNumberOfCustomerRated() {
-        return numberOfCustomerRated;
+    public Integer getNumberCustomersRated() {
+        return numberCustomersRated;
     }
 
-    public void setNumberOfCustomerRated(Integer numberOfCustomerRated) {
-        this.numberOfCustomerRated = numberOfCustomerRated;
+    public void setNumberCustomersRated(Integer numberCustomersRated) {
+        this.numberCustomersRated = numberCustomersRated;
     }
 
     public AddressEntity getAddress() {

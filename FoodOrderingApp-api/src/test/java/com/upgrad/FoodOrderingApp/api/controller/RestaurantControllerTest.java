@@ -1,12 +1,16 @@
-/*package com.upgrad.FoodOrderingApp.api.controller;
+package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantList;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantListResponse;
 import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
-import com.upgrad.FoodOrderingApp.service.businness.ItemService;
+//import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
+import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -20,11 +24,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.junit.Assert.assertEquals;
+
 
 import java.util.Collections;
 import java.util.UUID;
 
-import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
+//import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,8 +50,8 @@ public class RestaurantControllerTest {
     @MockBean
     private RestaurantService mockRestaurantService;
 
-    @MockBean
-    private ItemService mockItemService;
+    //@MockBean
+    //private ItemService mockItemService;
 
     @MockBean
     private CategoryService mockCategoryService;
@@ -53,7 +59,7 @@ public class RestaurantControllerTest {
     @MockBean
     private CustomerService mockCustomerService;
 
-    // ------------------------------------------ GET /restaurant/{restaurant_id} ------------------------------------------
+ /*   // ------------------------------------------ GET /restaurant/{restaurant_id} ------------------------------------------
 
     //This test case passes when you get restaurant details based on restaurant id.
     @Test
@@ -216,7 +222,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantByCategory("someCategoryId");
     }
 
-
+*/
     // ------------------------------------------ GET /restaurant ------------------------------------------
 
     //This test case passes when you able to fetch the list of all restaurants.
@@ -241,13 +247,13 @@ public class RestaurantControllerTest {
         final RestaurantList restaurantList = restaurantListResponse.getRestaurants().get(0);
         assertEquals(restaurantList.getId().toString(), restaurantEntity.getUuid());
         assertEquals(restaurantList.getAddress().getId().toString(), restaurantEntity.getAddress().getUuid());
-        assertEquals(restaurantList.getAddress().getState().getId().toString(), restaurantEntity.getAddress().getState().getUuid());
+        assertEquals(restaurantList.getAddress().getState().getId().toString(), restaurantEntity.getAddress().getState().getStateUuid());
 
         verify(mockRestaurantService, times(1)).restaurantsByRating();
         verify(mockCategoryService, times(1)).getCategoriesByRestaurant(restaurantEntity.getUuid());
     }
 
-
+/*
     // ------------------------------------------ PUT /restaurant/{restaurant_id} ------------------------------------------
 
     //This test case passes when you are able to update restaurant rating successfully.
@@ -437,7 +443,7 @@ public class RestaurantControllerTest {
         itemEntity.setType(NON_VEG);
         itemEntity.setPrice(200);
         return itemEntity;
-    }
+    }*/
 
     private CategoryEntity getCategoryEntity() {
         final CategoryEntity categoryEntity = new CategoryEntity();
@@ -464,4 +470,4 @@ public class RestaurantControllerTest {
         restaurantEntity.setRestaurantName("Famous Restaurant");
         return restaurantEntity;
     }
-}*/
+}
