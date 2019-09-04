@@ -2,10 +2,13 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.AddressBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.AddressService;
+import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
-import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,42 +28,57 @@ import java.util.UUID;
 public class AddressController {
 
     @Autowired
-    AddressBusinessService addressBusinessService;
+    AddressService addressService;
+
+    @Autowired
+    CustomerService customerService;
 
 
     @RequestMapping(method = RequestMethod.POST,path = "",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader("authorization") final String authorization, @RequestBody(required = false)SaveAddressRequest saveAddressRequest)throws AuthorizationFailedException, AddressNotFoundException, SaveAddressException {
+        String accessToken = authorization.split("Bearer ")[1];
+
+
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+
         AddressEntity addressEntity = new AddressEntity();
 
-        addressEntity.setFlatBuilNumber(saveAddressRequest.getFlatBuildingName());
+        addressEntity.setFlatBuilNo(saveAddressRequest.getFlatBuildingName());
         addressEntity.setCity(saveAddressRequest.getCity());
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setPincode(saveAddressRequest.getPincode());
         addressEntity.setUuid(UUID.randomUUID().toString());
 
-        String stateUuid = saveAddressRequest.getStateUuid();
 
-        AddressEntity createdAddress = addressBusinessService.saveAddress(authorization,addressEntity,stateUuid);
+        StateEntity stateEntity = addressService.getStateByUUID(saveAddressRequest.getStateUuid());
+
+        AddressEntity savedAddress = addressService.saveAddress(addressEntity,stateEntity);
+
+        CustomerAddressEntity customerAddressEntity = addressService.saveCustomerAddressEntity(customerEntity,savedAddress);
 
         SaveAddressResponse saveAddressResponse = new SaveAddressResponse()
-                .id(createdAddress.getUuid())
+                .id(savedAddress.getUuid())
                 .status("ADDRESS SUCCESSFULLY REGISTERED");
-        return new ResponseEntity<SaveAddressResponse>(saveAddressResponse,HttpStatus.OK);
+        return new ResponseEntity<SaveAddressResponse>(saveAddressResponse,HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET,path = "/customer",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AddressListResponse> getAllSavedAddress(@RequestHeader("authorization")final String authorization)throws AuthorizationFailedException{
-        List<AddressEntity> addressEntities = addressBusinessService.getAllSavedAddress(authorization);
-        Collections.reverse(addressEntities);
+        String accessToken = authorization.split("Bearer ")[1];
+
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+
+        List<AddressEntity> addressEntities = addressService.getAllAddress(customerEntity);
+        //Collections.reverse(addressEntities);
         List<AddressList> addressLists = new LinkedList<>();
         addressEntities.forEach(addressEntity -> {
             AddressListState addressListState = new AddressListState()
-                    .stateName(addressEntity.getStateName().getStateName())
-                    .id(UUID.fromString(addressEntity.getStateName().getUuid()));
+                    .stateName(addressEntity.getState().getStateName())
+                    .id(UUID.fromString(addressEntity.getState().getStateUuid()));
             AddressList addressList = new AddressList()
                     .id(UUID.fromString(addressEntity.getUuid()))
                     .city(addressEntity.getCity())
-                    .flatBuildingName(addressEntity.getFlatBuilNumber())
+                    .flatBuildingName(addressEntity.getFlatBuilNo())
                     .locality(addressEntity.getLocality())
                     .pincode(addressEntity.getPincode())
                     .state(addressListState);
@@ -68,7 +86,7 @@ public class AddressController {
         });
 
         AddressListResponse addressListResponse = new AddressListResponse().addresses(addressLists);
-        System.out.println(addressListResponse);
+        System.out.println(HttpStatus.FORBIDDEN);
         return new ResponseEntity<AddressListResponse>(addressListResponse,HttpStatus.OK);
     }
 

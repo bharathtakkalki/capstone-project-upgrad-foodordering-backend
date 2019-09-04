@@ -26,7 +26,7 @@ public class AddressEntity {
 
     @Column(name = "flat_buil_number")
     @Size(max = 255)
-    private String flatBuilNumber;
+    private String flatBuilNo;
 
     @Column(name = "locality")
     @Size(max = 255)
@@ -46,7 +46,7 @@ public class AddressEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private StateEntity stateName;
+    private StateEntity state;
 
     public Integer getId() {
         return id;
@@ -64,12 +64,12 @@ public class AddressEntity {
         this.uuid = uuid;
     }
 
-    public String getFlatBuilNumber() {
-        return flatBuilNumber;
+    public String getFlatBuilNo() {
+        return flatBuilNo;
     }
 
-    public void setFlatBuilNumber(String flatBuilNumber) {
-        this.flatBuilNumber = flatBuilNumber;
+    public void setFlatBuilNo(String flatBuilNo) {
+        this.flatBuilNo = flatBuilNo;
     }
 
     public String getLocality() {
@@ -104,11 +104,11 @@ public class AddressEntity {
         this.active = active;
     }
 
-    public StateEntity getStateName() {
-        return stateName;
+    public StateEntity getState() {
+        return state;
     }
 
-    public void setStateName(StateEntity stateName) {
-        this.stateName = stateName;
+    public void setState(StateEntity state) {
+        this.state = state;
     }
 }

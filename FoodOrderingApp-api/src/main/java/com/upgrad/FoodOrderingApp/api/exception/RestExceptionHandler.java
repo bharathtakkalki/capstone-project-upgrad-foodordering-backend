@@ -53,7 +53,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
                 .code(exc.getCode())
                 .message(exc.getErrorMessage()),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
@@ -61,6 +61,6 @@ public class RestExceptionHandler {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
                 .code(exc.getCode())
                 .message(exc.getErrorMessage()),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.FORBIDDEN);
     }
 }
