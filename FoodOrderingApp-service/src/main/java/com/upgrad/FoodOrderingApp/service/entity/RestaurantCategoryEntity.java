@@ -12,7 +12,8 @@ import java.util.AbstractCollection;
 @Table(name = "restaurant_category")
 @NamedQueries({
 
-        @NamedQuery(name = "getCategoriesByRestaurant",query = "SELECT r from RestaurantCategoryEntity r where r.restaurant= :restaurant ORDER BY r.category.categoryName ASC "),
+        @NamedQuery(name = "getCategoriesByRestaurant",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.restaurant= :restaurant ORDER BY r.category.categoryName ASC "),
+        @NamedQuery(name = "getRestaurantByCategory",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.category = :category ORDER BY r.restaurant.customerRating DESC "),
 })
 public class RestaurantCategoryEntity {
 

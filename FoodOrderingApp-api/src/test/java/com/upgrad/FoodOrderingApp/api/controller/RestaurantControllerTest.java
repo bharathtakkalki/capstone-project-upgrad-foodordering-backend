@@ -163,7 +163,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantsByName(anyString());
     }
 
-/*
+
     // ------------------------------------------ GET /restaurant/category/{category_id} ------------------------------------------
 
     //This test case passes when you are able to retrieve restaurant belonging to any particular categories.
@@ -188,7 +188,7 @@ public class RestaurantControllerTest {
         final RestaurantList restaurantList = restaurantListResponse.getRestaurants().get(0);
         assertEquals(restaurantList.getId().toString(), restaurantEntity.getUuid());
         assertEquals(restaurantList.getAddress().getId().toString(), restaurantEntity.getAddress().getUuid());
-        assertEquals(restaurantList.getAddress().getState().getId().toString(), restaurantEntity.getAddress().getState().getUuid());
+        assertEquals(restaurantList.getAddress().getState().getId().toString(), restaurantEntity.getAddress().getState().getStateUuid());
 
         verify(mockRestaurantService, times(1)).restaurantByCategory("someCategoryId");
         verify(mockCategoryService, times(1)).getCategoriesByRestaurant(restaurantEntity.getUuid());
@@ -222,7 +222,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantByCategory("someCategoryId");
     }
 
-*/
+
     // ------------------------------------------ GET /restaurant ------------------------------------------
 
     //This test case passes when you able to fetch the list of all restaurants.
