@@ -10,6 +10,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "restaurant_item")
+@NamedQueries({
+        @NamedQuery(name = "getItemsByRestaurant",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY r.item.itemName ASC "),
+})
 public class RestaurantItemEntity {
 
     @Id
