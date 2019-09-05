@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.CustomerOrderResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
 import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
-import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
-import com.upgrad.FoodOrderingApp.service.businness.ItemService;
-import com.upgrad.FoodOrderingApp.service.businness.OrderService;
-import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.businness.*;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,19 +43,19 @@ public class OrderControllerTest {
     @MockBean
     private CustomerService mockCustomerService;
 
-//    @MockBean
-//    private PaymentService mockPaymentService;
-//
-//    @MockBean
-//    private AddressService mockAddressService;
-//
-//    @MockBean
-//    private RestaurantService mockRestaurantService;
+    @MockBean
+    private PaymentService mockPaymentService;
+
+    @MockBean
+    private AddressService mockAddressService;
+
+    @MockBean
+    private RestaurantService mockRestaurantService;
 
     @MockBean
     private ItemService mockItemService;
 
- /*   // ------------------------------------------ POST /order ------------------------------------------
+    // ------------------------------------------ POST /order ------------------------------------------
 
     //This test case passes when you are able to save order successfully.
     @Test
@@ -79,7 +76,7 @@ public class OrderControllerTest {
         when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString()))
                 .thenReturn(new CouponEntity());
 
-        final OrderEntity orderEntity = new OrderEntity();
+        final OrdersEntity orderEntity = new OrdersEntity();
         final String orderId = UUID.randomUUID().toString();
         orderEntity.setUuid(orderId);
         when(mockOrderService.saveOrder(any())).thenReturn(orderEntity);
@@ -352,7 +349,7 @@ public class OrderControllerTest {
         verify(mockOrderService, times(0)).saveOrderItem(any());
     }
 
-    // ------------------------------------------ GET /order ------------------------------------------
+ /*   // ------------------------------------------ GET /order ------------------------------------------
 
     //This test case passes when you are able to retrieve all past orders placed by you
     @Test

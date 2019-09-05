@@ -57,10 +57,11 @@ public class OrderController {
     public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader(value = "authorization")final String authorization, @RequestBody(required = false) final SaveOrderRequest saveOrderRequest) throws AuthorizationFailedException, PaymentMethodNotFoundException, AddressNotFoundException, RestaurantNotFoundException, CouponNotFoundException ,ItemNotFoundException{
         String accessToken = authorization.split("Bearer ")[1];
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+        CouponEntity couponEntity = orderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString());
         PaymentEntity paymentEntity = paymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
         AddressEntity addressEntity = addressService.getAddressByUUID(saveOrderRequest.getAddressId(),customerEntity);
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(saveOrderRequest.getRestaurantId().toString());
-        CouponEntity couponEntity = orderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString());
+
 
         OrdersEntity ordersEntity = new OrdersEntity();
         ordersEntity.setUuid(UUID.randomUUID().toString());
@@ -91,7 +92,7 @@ public class OrderController {
         SaveOrderResponse saveOrderResponse = new SaveOrderResponse()
                 .id(savedOrderEntity.getUuid())
                 .status("ORDER SUCCESSFULLY PLACED");
-        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse,HttpStatus.OK);
+        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse,HttpStatus.CREATED);
     }
 
 
