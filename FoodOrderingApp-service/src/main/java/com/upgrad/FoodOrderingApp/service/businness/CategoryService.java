@@ -1,5 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
+import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantCategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
@@ -21,6 +22,10 @@ public class CategoryService {
 
     @Autowired
     RestaurantDao restaurantDao;
+
+    @Autowired
+    CategoryDao categoryDao;
+
     public List<CategoryEntity> getCategoriesByRestaurant(String restaurantUuid){
         RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
         List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.getCategoriesByRestaurant(restaurantEntity);
@@ -28,6 +33,11 @@ public class CategoryService {
         restaurantCategoryEntities.forEach(restaurantCategoryEntity -> {
             categoryEntities.add(restaurantCategoryEntity.getCategory());
         });
+        return categoryEntities;
+    }
+
+    public List<CategoryEntity> getAllCategoriesOrderedByName() {
+        List<CategoryEntity> categoryEntities = categoryDao.getAllCategoriesOrderedByName();
         return categoryEntities;
     }
 }
