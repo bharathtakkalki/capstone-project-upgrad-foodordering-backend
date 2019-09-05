@@ -1,4 +1,4 @@
-/*package com.upgrad.FoodOrderingApp.api.controller;
+package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.CategoriesListResponse;
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.UUID;
-
+import static org.junit.Assert.assertEquals;
 import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
@@ -38,7 +38,7 @@ public class CategoryControllerTest {
 
     @MockBean
     private CategoryService mockCategoryService;
-
+/*
     //This test case passes when you have are able to fetch any category by its id.
     @Test
     public void shouldGetCategoryById() throws Exception {
@@ -99,7 +99,7 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("code").value("CNF-002"));
         verify(mockCategoryService, times(1)).getCategoryById("someCategory");
     }
-
+*/
     //This test case passes when you are able to fetch the list of all categories ordered by their name.
     @Test
     public void shouldGetAllCategoryOrderedByName() throws Exception {
@@ -138,4 +138,4 @@ public class CategoryControllerTest {
     }
 
 
-}*/
+}
