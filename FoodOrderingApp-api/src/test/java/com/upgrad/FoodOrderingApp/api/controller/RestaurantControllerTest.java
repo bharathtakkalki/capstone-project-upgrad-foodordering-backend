@@ -250,7 +250,7 @@ public class RestaurantControllerTest {
         verify(mockCategoryService, times(1)).getCategoriesByRestaurant(restaurantEntity.getUuid());
     }
 
-/*
+
     // ------------------------------------------ PUT /restaurant/{restaurant_id} ------------------------------------------
 
     //This test case passes when you are able to update restaurant rating successfully.
@@ -430,7 +430,7 @@ public class RestaurantControllerTest {
                 .updateRestaurantRating(restaurantEntity, 5.5);
     }
 
-  */  // ------------------------------------------ POJO builders ------------------------------------------
+    // ------------------------------------------ POJO builders ------------------------------------------
 
     private ItemEntity getItemEntity() {
         final ItemEntity itemEntity = new ItemEntity();
