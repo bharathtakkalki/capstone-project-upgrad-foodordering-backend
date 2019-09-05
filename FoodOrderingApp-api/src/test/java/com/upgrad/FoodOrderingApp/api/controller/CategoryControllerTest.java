@@ -38,14 +38,14 @@ public class CategoryControllerTest {
 
     @MockBean
     private CategoryService mockCategoryService;
-/*
+
     //This test case passes when you have are able to fetch any category by its id.
     @Test
     public void shouldGetCategoryById() throws Exception {
         final ItemEntity itemEntity = new ItemEntity();
         itemEntity.setItemName("myItem");
         itemEntity.setPrice(200);
-        itemEntity.setType(NON_VEG);
+        itemEntity.setType(NON_VEG.toString());
         final String itemId = UUID.randomUUID().toString();
         itemEntity.setUuid(itemId);
 
@@ -99,7 +99,7 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("code").value("CNF-002"));
         verify(mockCategoryService, times(1)).getCategoryById("someCategory");
     }
-*/
+
     //This test case passes when you are able to fetch the list of all categories ordered by their name.
     @Test
     public void shouldGetAllCategoryOrderedByName() throws Exception {

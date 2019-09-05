@@ -3,9 +3,11 @@ package com.upgrad.FoodOrderingApp.service.common;
 
 
 public enum ItemType {
+
     VEG("VEG"),
 
     NON_VEG("NON_VEG");
+
 
     private String value;
 
@@ -28,3 +30,18 @@ public enum ItemType {
     }
 }
 
+
+//public enum  ItemType {
+//    VEG(0),
+//    NON_VEG(1);
+//
+//    private  int value;
+//
+//    ItemType(int i) {
+//        this.value = i;
+//    }
+//
+//    public String toSting(){
+//        return String.valueOf(value);
+//    }
+//}
