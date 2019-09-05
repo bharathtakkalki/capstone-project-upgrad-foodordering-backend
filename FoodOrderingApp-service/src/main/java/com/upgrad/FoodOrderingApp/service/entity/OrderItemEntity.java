@@ -10,12 +10,16 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order_item")
+@NamedQueries({
+
+        @NamedQuery(name = "getItemsByPopularity",query = "SELECT o FROM OrderItemEntity o GROUP BY o.item ORDER BY COUNT(o.item) DESC")
+})
 public class OrderItemEntity {
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne(fetch = FetchType.EAGER)
