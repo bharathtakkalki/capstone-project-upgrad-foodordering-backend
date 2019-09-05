@@ -1,9 +1,14 @@
-/*package com.upgrad.FoodOrderingApp.api.controller;
+package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.CustomerOrderResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
 import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
+import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
+import com.upgrad.FoodOrderingApp.service.businness.ItemService;
+import com.upgrad.FoodOrderingApp.service.businness.OrderService;
+import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,19 +46,19 @@ public class OrderControllerTest {
     @MockBean
     private CustomerService mockCustomerService;
 
-    @MockBean
-    private PaymentService mockPaymentService;
-
-    @MockBean
-    private AddressService mockAddressService;
-
-    @MockBean
-    private RestaurantService mockRestaurantService;
+//    @MockBean
+//    private PaymentService mockPaymentService;
+//
+//    @MockBean
+//    private AddressService mockAddressService;
+//
+//    @MockBean
+//    private RestaurantService mockRestaurantService;
 
     @MockBean
     private ItemService mockItemService;
 
-    // ------------------------------------------ POST /order ------------------------------------------
+ /*   // ------------------------------------------ POST /order ------------------------------------------
 
     //This test case passes when you are able to save order successfully.
     @Test
@@ -432,7 +437,7 @@ public class OrderControllerTest {
     }
 
     // ------------------------------------------ GET /order/coupon/{coupon_name} ------------------------------------------
-
+*/
     //This test case passes when you are able to retrieve coupon details by coupon name.
     @Test
     public void shouldGetCouponByName() throws Exception {
@@ -574,7 +579,7 @@ public class OrderControllerTest {
 
         return request;
     }
-
+/*
     private OrderEntity getOrderEntity(final CustomerEntity customerEntity) {
         final String stateId = UUID.randomUUID().toString();
         final StateEntity stateEntity = new StateEntity(stateId, "someState");
@@ -604,7 +609,7 @@ public class OrderControllerTest {
         final Date orderDate = new Date();
         return new OrderEntity(orderId, 200.50, couponEntity, 10.0,
                 orderDate, paymentEntity, customerEntity, addressEntity, restaurantEntity);
-    }
+    }*/
 
 
-}*/
+}
