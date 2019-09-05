@@ -7,6 +7,9 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "payment",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+        @NamedQuery(name = "getPaymentByUUID",query = "SELECT p FROM PaymentEntity p WHERE p.uuid = :uuid"),
+})
 public class PaymentEntity {
 
 
