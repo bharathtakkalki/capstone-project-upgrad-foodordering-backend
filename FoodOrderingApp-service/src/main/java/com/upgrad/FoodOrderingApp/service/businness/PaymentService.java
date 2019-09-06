@@ -6,6 +6,7 @@ import com.upgrad.FoodOrderingApp.service.exception.PaymentMethodNotFoundExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,5 +22,10 @@ public class PaymentService {
             throw new PaymentMethodNotFoundException("PNF-002","No payment method found by this id");
         }
         return paymentEntity;
+    }
+
+    public List<PaymentEntity> getAllPaymentMethods() {
+        List<PaymentEntity> paymentEntities = paymentDao.getAllPaymentMethods();
+        return paymentEntities;
     }
 }
