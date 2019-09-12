@@ -17,11 +17,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 
-@CrossOrigin
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -32,7 +33,7 @@ public class CustomerController {
     @Autowired
     UitilityProvider uitilityProvider;
 
-
+    @CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 6000)
     @RequestMapping(method = RequestMethod.POST,path = "/signup",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignupCustomerResponse> signUpCustomer(@RequestBody(required = false)  final SignupCustomerRequest signupCustomerRequest)throws SignUpRestrictedException {
         CustomerEntity customerEntity = new CustomerEntity();
@@ -51,7 +52,7 @@ public class CustomerController {
         return new ResponseEntity<SignupCustomerResponse>(signupCustomerResponse,HttpStatus.CREATED);
     }
 
-
+    @CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 6000)
     @RequestMapping(method = RequestMethod.POST,path = "/login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LoginResponse> customerLogin (@RequestHeader("authorization") final String authorization)throws AuthenticationFailedException {
 
@@ -63,8 +64,14 @@ public class CustomerController {
 
         CustomerAuthEntity customerAuthEntity = customerService.authenticate(decodedArray[0],decodedArray[1]);
 
+
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("access-token", customerAuthEntity.getAccessToken());
+
+        List<String> header = new ArrayList<>();
+        header.add("access-token");
+        headers.setAccessControlExposeHeaders(header);
 
         LoginResponse loginResponse = new LoginResponse()
                 .id(customerAuthEntity.getCustomer().getUuid())
