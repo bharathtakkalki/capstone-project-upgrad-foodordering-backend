@@ -15,11 +15,13 @@ public class OrderDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //To save Order in the db
     public OrdersEntity saveOrder(OrdersEntity ordersEntity){
         entityManager.persist(ordersEntity);
         return ordersEntity;
     }
 
+    //To get List of order from the db Corresponding to Customers
     public List<OrdersEntity> getOrdersByCustomers(CustomerEntity customerEntity) {
         try {
             List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByCustomers",OrdersEntity.class).setParameter("customer",customerEntity).getResultList();

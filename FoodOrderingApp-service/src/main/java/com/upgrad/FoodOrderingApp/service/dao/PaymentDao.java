@@ -18,6 +18,7 @@ public class PaymentDao {
     private EntityManager entityManager;
 
 
+    //To get Payment By UUID from the db
     public PaymentEntity getPaymentByUUID(String paymentId) {
         try{
             PaymentEntity paymentEntity = entityManager.createNamedQuery("getPaymentByUUID",PaymentEntity.class).setParameter("uuid",paymentId).getSingleResult();
@@ -26,7 +27,7 @@ public class PaymentDao {
             return null;
         }
     }
-
+    //To get All Payment Methods from the db
     public List<PaymentEntity> getAllPaymentMethods() {
         try {
             List<PaymentEntity> paymentEntities =entityManager.createNamedQuery("getAllPaymentMethods", PaymentEntity.class).getResultList();
