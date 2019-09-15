@@ -26,6 +26,12 @@ public class ItemService {
     @Autowired
     CategoryDao categoryDao;
 
+    @Autowired
+    OrderItemDao orderItemDao;
+
+    @Autowired
+    OrderDao orderDao;
+
 
     public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
         RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
@@ -43,6 +49,13 @@ public class ItemService {
             });
         });
 
+        return itemEntities;
+    }
+
+    public List<ItemEntity> getItemsByPopularity(RestaurantEntity restaurantEntity) {
+       List <OrdersEntity> ordersEntities = orderDao.getOrdersByRestaurant(restaurantEntity);
+       List <OrderItemEntity> orderItemEntities = orderItemDao.getItemsByOrders(ordersEntities);
+       List<ItemEntity> itemEntities = new LinkedList<>();
         return itemEntities;
     }
 }
