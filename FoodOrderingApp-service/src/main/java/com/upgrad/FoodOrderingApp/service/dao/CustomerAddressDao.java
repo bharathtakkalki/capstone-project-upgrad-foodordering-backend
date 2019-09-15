@@ -10,6 +10,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+//This Class is created to access DB with respect to CustomerAddress entity
+
 @Repository
 public class CustomerAddressDao {
 
@@ -17,11 +19,13 @@ public class CustomerAddressDao {
     private EntityManager entityManager;
 
 
+    //To save saveCustomerAddress
     public CustomerAddressEntity saveCustomerAddress(CustomerAddressEntity customerAddressEntity){
         entityManager.persist(customerAddressEntity);
         return customerAddressEntity;
     }
 
+    //To get all customer address by customer if no results return null
     public List<CustomerAddressEntity> getAllCustomerAddressByCustomer(CustomerEntity customerEntity){
         try{
            List <CustomerAddressEntity> customerAddressEntities = entityManager.createNamedQuery("getAllCustomerAddressByCustomer",CustomerAddressEntity.class).setParameter("customer_entity",customerEntity).getResultList();
@@ -31,6 +35,7 @@ public class CustomerAddressDao {
         }
     }
 
+    //To get Customer Address By Address if no results return null
     public CustomerAddressEntity getCustomerAddressByAddress(AddressEntity addressEntity){
         try {
             CustomerAddressEntity customerAddressEntity = entityManager.createNamedQuery("getCustomerAddressByAddress",CustomerAddressEntity.class).setParameter("address_entity",addressEntity).getSingleResult();

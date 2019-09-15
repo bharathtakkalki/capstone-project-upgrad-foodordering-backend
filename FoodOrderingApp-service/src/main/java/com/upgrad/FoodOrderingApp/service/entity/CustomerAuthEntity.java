@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 import java.sql.Time;
 import java.time.ZonedDateTime;
 
+//This Class represents the CustomerAuth table in the DB.
+
 @Entity
 @Table(name = "customer_auth",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
 @NamedQueries({
