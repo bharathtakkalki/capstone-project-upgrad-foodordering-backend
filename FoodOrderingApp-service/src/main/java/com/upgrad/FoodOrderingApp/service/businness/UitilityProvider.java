@@ -2,6 +2,7 @@ package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
+import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,13 @@ import java.util.regex.Pattern;
 
 @Component
 public class UitilityProvider {
+
+    public  Boolean isValidRestaurantName(String restaurantName)throws RestaurantNotFoundException {
+        if(restaurantName == null || restaurantName ==""){
+            throw new RestaurantNotFoundException("RNF-003","Restaurant name field should not be empty");
+        }
+        return true;
+    }
 
     public boolean isValidPassword(String password){
         Boolean lowerCase = false;
