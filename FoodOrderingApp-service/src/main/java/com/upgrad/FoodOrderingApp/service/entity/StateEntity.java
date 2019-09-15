@@ -8,23 +8,38 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "state",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+
+        @NamedQuery(name = "getStateByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
+        @NamedQuery(name = "getAllStates",query = "SELECT s from StateEntity s"),
+})
 public class StateEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
     @Column(name = "uuid")
     @Size(max = 200)
     @NotNull
-    private String uuid;
+    private String stateUuid;
 
 
     @Column(name = "state_name")
     @Size(max = 30)
     private String stateName;
+
+    public StateEntity(String stateUuid, String stateName) {
+        this.stateUuid = stateUuid;
+        this.stateName = stateName;
+        return;
+    }
+
+    public StateEntity() {
+
+    }
 
     public Integer getId() {
         return id;
@@ -34,12 +49,12 @@ public class StateEntity {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getStateUuid() {
+        return stateUuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setStateUuid(String stateUuid) {
+        this.stateUuid = stateUuid;
     }
 
     public String getStateName() {

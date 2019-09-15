@@ -11,12 +11,16 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table (name = "address",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+
+        @NamedQuery(name = "getAddressByUuid",query = "SELECT a from AddressEntity a where a.uuid = :uuid"),
+})
 public class AddressEntity {
 
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "uuid")
@@ -26,7 +30,7 @@ public class AddressEntity {
 
     @Column(name = "flat_buil_number")
     @Size(max = 255)
-    private String flatBuilNumber;
+    private String flatBuilNo;
 
     @Column(name = "locality")
     @Size(max = 255)
@@ -41,12 +45,12 @@ public class AddressEntity {
     private String pincode;
 
     @Column(name = "active")
-    private Integer active;
+    private Integer active = 1;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private StateEntity stateName;
+    private StateEntity state;
 
     public Integer getId() {
         return id;
@@ -64,12 +68,12 @@ public class AddressEntity {
         this.uuid = uuid;
     }
 
-    public String getFlatBuilNumber() {
-        return flatBuilNumber;
+    public String getFlatBuilNo() {
+        return flatBuilNo;
     }
 
-    public void setFlatBuilNumber(String flatBuilNumber) {
-        this.flatBuilNumber = flatBuilNumber;
+    public void setFlatBuilNo(String flatBuilNo) {
+        this.flatBuilNo = flatBuilNo;
     }
 
     public String getLocality() {
@@ -104,11 +108,11 @@ public class AddressEntity {
         this.active = active;
     }
 
-    public StateEntity getStateName() {
-        return stateName;
+    public StateEntity getState() {
+        return state;
     }
 
-    public void setStateName(StateEntity stateName) {
-        this.stateName = stateName;
+    public void setState(StateEntity state) {
+        this.state = state;
     }
 }
