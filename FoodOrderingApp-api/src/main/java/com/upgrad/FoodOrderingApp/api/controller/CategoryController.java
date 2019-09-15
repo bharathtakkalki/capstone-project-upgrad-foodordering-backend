@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +26,6 @@ public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
-
-    @Autowired
-    ItemService itemService;
 
     @RequestMapping(method = RequestMethod.GET,path = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CategoriesListResponse> getAllCategories(){
@@ -55,19 +49,14 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET,path = "/{category_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CategoryDetailsResponse> getCategoryById(@PathVariable(value = "category_id")final String categoryUuid) throws CategoryNotFoundException {
         CategoryEntity categoryEntity = categoryService.getCategoryById(categoryUuid);
-        List<ItemEntity> itemEntities = itemService.getItemsByCategory(categoryEntity);
+        List<ItemEntity> itemEntities = categoryEntity.getItems();
         List<ItemList> itemLists = new LinkedList<>();
         itemEntities.forEach(itemEntity -> {
-            if(itemEntity.getType().equals("0")){
-                itemEntity.setType("VEG");
-            }else {
-                itemEntity.setType("NON_VEG");
-            }
             ItemList itemList = new ItemList()
                     .id(UUID.fromString(itemEntity.getUuid()))
                     .price(itemEntity.getPrice())
                     .itemName(itemEntity.getitemName())
-                    .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType()));
+                    .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
             itemLists.add(itemList);
         });
 

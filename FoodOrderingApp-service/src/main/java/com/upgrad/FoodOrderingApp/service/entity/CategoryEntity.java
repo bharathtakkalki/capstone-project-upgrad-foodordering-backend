@@ -6,6 +6,8 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.List;
         @NamedQuery(name = "getCategoryByUuid",query = "SELECT c FROM CategoryEntity c WHERE c.uuid = :uuid"),
         @NamedQuery(name = "getAllCategoriesOrderedByName",query = "SELECT c FROM CategoryEntity c ORDER BY c.categoryName ASC "),
 })
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -31,17 +33,12 @@ public class CategoryEntity {
     @Size(max = 255)
     private String categoryName;
 
-    @Transient
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<ItemEntity> items;
+    @ManyToMany
+    @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
 
-    public List<ItemEntity> getItems() {
-        return items;
-    }
 
-    public void setItems(List<ItemEntity> itemEntities) {
-        this.items = itemEntities;
-    }
 
     public Integer getId() {
         return id;
@@ -65,5 +62,13 @@ public class CategoryEntity {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
     }
 }
