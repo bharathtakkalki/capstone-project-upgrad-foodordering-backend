@@ -27,7 +27,10 @@ public class ItemService {
     CategoryDao categoryDao;
 
     @Autowired
-    OrderItemDao orderItemEntity;
+    OrderItemDao orderItemDao;
+
+    @Autowired
+    OrderDao orderDao;
 
 
     public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
@@ -50,10 +53,8 @@ public class ItemService {
     }
 
     public List<ItemEntity> getItemsByPopularity(RestaurantEntity restaurantEntity) {
-       List <RestaurantItemEntity> restaurantItemEntities = restaurantItemDao.getItemsByRestaurant(restaurantEntity);
-       List l = orderItemEntity.getItemsByPopularity();
-       System.out.println("here");
-       System.out.println(l);
+       List <OrdersEntity> ordersEntities = orderDao.getOrdersByRestaurant(restaurantEntity);
+       List <OrderItemEntity> orderItemEntities = orderItemDao.getItemsByOrders(ordersEntities);
        List<ItemEntity> itemEntities = new LinkedList<>();
         return itemEntities;
     }
