@@ -1,10 +1,12 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
+import com.upgrad.FoodOrderingApp.service.common.ItemType;
 import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.EnumControl;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,6 +58,16 @@ public class ItemService {
        List <OrdersEntity> ordersEntities = orderDao.getOrdersByRestaurant(restaurantEntity);
        List <OrderItemEntity> orderItemEntities = orderItemDao.getItemsByOrders(ordersEntities);
        List<ItemEntity> itemEntities = new LinkedList<>();
+        return itemEntities;
+    }
+
+    public List<ItemEntity> getItemsByCategory(CategoryEntity categoryEntity) {
+        List<CategoryItemEntity> categoryItemEntities = categoryItemDao.getItemsByCategory(categoryEntity);
+        List<ItemEntity> itemEntities = new LinkedList<>();
+        categoryItemEntities.forEach(categoryItemEntity -> {
+            ItemEntity itemEntity = categoryItemEntity.getItem();
+            itemEntities.add(itemEntity);
+        });
         return itemEntities;
     }
 }

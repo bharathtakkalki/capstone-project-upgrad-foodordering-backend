@@ -188,16 +188,11 @@ public class RestaurantController {
            List<ItemEntity> itemEntities = itemService.getItemsByCategoryAndRestaurant(restaurantUuid ,categoryEntity.getUuid());
             List<ItemList> itemLists = new LinkedList<>();
            itemEntities.forEach(itemEntity -> {
-               if(itemEntity.getType().equals("0")){
-                   itemEntity.setType("VEG");
-               }else {
-                   itemEntity.setType("NON_VEG");
-               }
                ItemList itemList = new ItemList()
                        .id(UUID.fromString(itemEntity.getUuid()))
                        .itemName(itemEntity.getitemName())
                        .price(itemEntity.getPrice())
-                       .itemType(ItemList.ItemTypeEnum.valueOf(itemEntity.getType()));
+                       .itemType(ItemList.ItemTypeEnum.valueOf(itemEntity.getType().getValue()));
 
                itemLists.add(itemList);
            });
