@@ -10,6 +10,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "category_item")
+@NamedQueries({
+
+        @NamedQuery(name = "getItemsByCategory",query = "SELECT c FROM CategoryItemEntity c WHERE c.category = :category ORDER BY c.item.itemName ASC "),
+})
 public class CategoryItemEntity {
 
 
@@ -17,7 +21,7 @@ public class CategoryItemEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -26,7 +30,7 @@ public class CategoryItemEntity {
     @NotNull
     private ItemEntity item;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull

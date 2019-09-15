@@ -1,9 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
-import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
+import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -12,6 +10,7 @@ import java.util.regex.Pattern;
 
 @Component
 public class UitilityProvider {
+
 
     public boolean isValidPassword(String password){
         Boolean lowerCase = false;
@@ -109,5 +108,15 @@ public class UitilityProvider {
         }
         return true;
     }
+
+    public boolean isValidCustomerRating(String cutomerRating){
+        if(cutomerRating.equals("5.0")){
+            return true;
+        }
+        Pattern p = Pattern.compile("[1-4].[0-9]");
+        Matcher m = p.matcher(cutomerRating);
+        return (m.find() && m.group().equals(cutomerRating));
+    }
+
 }
 
