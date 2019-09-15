@@ -8,6 +8,9 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "orders",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+@NamedQueries({
+        @NamedQuery(name = "getOrdersByRestaurant",query = "SELECT o FROM OrdersEntity o WHERE o.restaurant = :restaurant")
+})
 public class OrdersEntity {
 
 

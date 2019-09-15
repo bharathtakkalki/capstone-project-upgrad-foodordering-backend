@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "order_item")
 @NamedQueries({
 
-        @NamedQuery(name = "getItemsByPopularity",query = "SELECT o FROM OrderItemEntity o GROUP BY o.item ORDER BY COUNT(o.item) DESC")
+        @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order IN (:ordersEntities)"),
 })
 public class OrderItemEntity {
 
@@ -22,7 +22,7 @@ public class OrderItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
