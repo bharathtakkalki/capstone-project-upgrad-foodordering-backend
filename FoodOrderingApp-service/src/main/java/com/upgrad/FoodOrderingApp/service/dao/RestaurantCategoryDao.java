@@ -16,6 +16,7 @@ public class RestaurantCategoryDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //To get the list of RestaurantCategoryEntity from the db by restaurant
     public List<RestaurantCategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity){
         try {
             List<RestaurantCategoryEntity> restaurantCategoryEntity = entityManager.createNamedQuery("getCategoriesByRestaurant",RestaurantCategoryEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
@@ -26,6 +27,7 @@ public class RestaurantCategoryDao {
 
     }
 
+    //To get the list of RestaurantCategoryEntity from the db by category
     public List<RestaurantCategoryEntity> getRestaurantByCategory(CategoryEntity categoryEntity) {
         try {
             List<RestaurantCategoryEntity> restaurantCategoryEntities = entityManager.createNamedQuery("getRestaurantByCategory",RestaurantCategoryEntity.class).setParameter("category",categoryEntity).getResultList();
