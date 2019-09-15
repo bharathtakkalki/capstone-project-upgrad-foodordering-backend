@@ -57,7 +57,7 @@ public class ItemEntity {
         return itemName;
     }
 
-    public void setitemName(String itemName) {
+    public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
