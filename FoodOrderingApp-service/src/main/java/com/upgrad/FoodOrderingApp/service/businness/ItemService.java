@@ -3,10 +3,12 @@ package com.upgrad.FoodOrderingApp.service.businness;
 import com.upgrad.FoodOrderingApp.service.common.ItemType;
 import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
+import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sound.sampled.EnumControl;
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,5 +70,13 @@ public class ItemService {
             itemEntities.add(itemEntity);
         });
         return itemEntities;
+    }
+
+    public ItemEntity getItemByUUID(String itemUuid) throws ItemNotFoundException {
+        ItemEntity itemEntity = itemDao.getItemByUUID(itemUuid);
+        if(itemEntity == null){
+            throw new ItemNotFoundException("INF-003","No item by this id exist");
+        }
+        return itemEntity;
     }
 }
