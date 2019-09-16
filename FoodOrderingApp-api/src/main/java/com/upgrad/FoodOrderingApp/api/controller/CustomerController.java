@@ -24,6 +24,7 @@ import java.util.UUID;
 
 
 
+
 // Customer Controller Handles all  the customer related endpoints
 
 @CrossOrigin
@@ -84,6 +85,7 @@ public class CustomerController {
         // Calls CustomerService method authenticate to authenticate the login request. if authenticated it returns CustomerAuthEntity conating the details as required.
         CustomerAuthEntity customerAuthEntity = customerService.authenticate(decodedArray[0],decodedArray[1]);
 
+
         //Creating header to add the accessToken
         HttpHeaders headers = new HttpHeaders();
         headers.add("access-token", customerAuthEntity.getAccessToken());
@@ -94,6 +96,7 @@ public class CustomerController {
         headers.setAccessControlExposeHeaders(header);
 
         //Creating login response Containing variables as per the loginResponse.
+
         LoginResponse loginResponse = new LoginResponse()
                 .id(customerAuthEntity.getCustomer().getUuid())
                 .contactNumber(customerAuthEntity.getCustomer().getContactNumber())
