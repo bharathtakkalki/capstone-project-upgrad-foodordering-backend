@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.UUID;
 
-//import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
+import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -437,7 +437,7 @@ public class RestaurantControllerTest {
         final String itemId = UUID.randomUUID().toString();
         itemEntity.setUuid(itemId);
         itemEntity.setItemName("someItem");
-        itemEntity.setType("NON_VEG");
+        itemEntity.setType(NON_VEG);
         itemEntity.setPrice(200);
         return itemEntity;
     }
