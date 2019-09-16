@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 //This Class represents the Restaurant table in the DB
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
         @NamedQuery(name = "getRestaurantByUuid",query = "SELECT r FROM RestaurantEntity r WHERE r.uuid = :uuid"),
         @NamedQuery(name = "restaurantsByName",query = "SELECT r FROM  RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :restaurant_name_low"),
 })
-public class RestaurantEntity {
+public class RestaurantEntity implements Serializable {
 
 
     @Id

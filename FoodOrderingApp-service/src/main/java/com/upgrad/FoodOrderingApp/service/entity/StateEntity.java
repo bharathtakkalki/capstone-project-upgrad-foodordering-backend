@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the StateEntity table in the DB.
 
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
         @NamedQuery(name = "getStateByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
         @NamedQuery(name = "getAllStates",query = "SELECT s from StateEntity s"),
 })
-public class StateEntity {
+public class StateEntity implements Serializable {
 
     @Id
     @Column(name = "id")

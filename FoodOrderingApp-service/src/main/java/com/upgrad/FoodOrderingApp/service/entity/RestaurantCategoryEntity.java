@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.AbstractCollection;
 
 //This Class represents the RestaurantCategory table in the DB
@@ -17,7 +18,7 @@ import java.util.AbstractCollection;
         @NamedQuery(name = "getCategoriesByRestaurant",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.restaurant= :restaurant ORDER BY r.category.categoryName ASC "),
         @NamedQuery(name = "getRestaurantByCategory",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.category = :category ORDER BY r.restaurant.customerRating DESC "),
 })
-public class RestaurantCategoryEntity {
+public class RestaurantCategoryEntity implements Serializable {
 
 
     @Id

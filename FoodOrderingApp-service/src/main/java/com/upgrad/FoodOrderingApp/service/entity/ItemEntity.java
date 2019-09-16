@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "getItemByUUID",query = "SELECT i FROM ItemEntity i WHERE i.uuid = :uuid"),
 })
-public class ItemEntity {
+public class ItemEntity implements Serializable {
 
 
     @Id

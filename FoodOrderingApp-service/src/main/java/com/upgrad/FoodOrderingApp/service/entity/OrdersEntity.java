@@ -4,6 +4,7 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.Date;
             @NamedQuery(name = "getOrdersByRestaurant",query = "SELECT o FROM OrdersEntity o WHERE o.restaurant = :restaurant"),
             @NamedQuery(name = "getOrdersByAddress",query = "SELECT o FROM OrdersEntity o WHERE o.address = :address")
 })
-public class OrdersEntity {
+public class OrdersEntity implements Serializable {
 
 
     @Id
