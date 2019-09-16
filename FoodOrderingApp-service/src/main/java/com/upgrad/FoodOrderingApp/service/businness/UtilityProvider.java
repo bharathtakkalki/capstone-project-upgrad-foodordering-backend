@@ -1,17 +1,20 @@
-package com.upgrad.FoodOrderingApp.service.common;
+package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.exception.*;
+import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
+import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
+import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class UitilityProvider {
+public class UtilityProvider {
 
 
+    //To validate the password as per given conditions,1Uppercase,1Lowercase,1Number,1SpecialCharacter and atleast 8 characters.
     public boolean isValidPassword(String password){
         Boolean lowerCase = false;
         Boolean upperCase = false;
@@ -46,23 +49,27 @@ public class UitilityProvider {
         return false;
     }
 
+    //To validate the ContactNo
     public boolean isContactValid(String contactNumber){
         Pattern p = Pattern.compile("(0/91)?[7-9][0-9]{9}");
         Matcher m = p.matcher(contactNumber);
         return (m.find() && m.group().equals(contactNumber));
     }
 
+    //To validate the email
     public boolean isEmailValid(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }
 
+    //To Validate the Pincode
     public boolean isPincodeValid(String pincode){
         Pattern p = Pattern.compile("\\d{6}\\b");
         Matcher m = p.matcher(pincode);
         return (m.find() && m.group().equals(pincode));
     }
 
+    //To validate the Signuprequest
     public boolean isValidSignupRequest (CustomerEntity customerEntity)throws SignUpRestrictedException{
         if (customerEntity.getFirstName() == null || customerEntity.getFirstName() == ""){
              throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
@@ -79,6 +86,7 @@ public class UitilityProvider {
         return true;
     }
 
+    //To validate the Authorization format
     public boolean isValidAuthorizationFormat(String authorization)throws AuthenticationFailedException{
         try {
             byte[] decoded = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
@@ -92,6 +100,8 @@ public class UitilityProvider {
         }
     }
 
+
+    //To validate Customer update request
     public boolean isValidUpdateCustomerRequest (String firstName)throws UpdateCustomerException {
         if (firstName == null || firstName == "") {
             throw new UpdateCustomerException("UCR-002", "First name field should not be empty");
@@ -99,6 +109,7 @@ public class UitilityProvider {
         return true;
     }
 
+    //To validate the password Update Request.
     public boolean isValidUpdatePasswordRequest(String oldPassword,String newPassword) throws UpdateCustomerException{
         if (oldPassword == null || oldPassword == "") {
             throw new UpdateCustomerException("UCR-003", "No field should be empty");
@@ -108,38 +119,5 @@ public class UitilityProvider {
         }
         return true;
     }
-
-    public boolean isValidCustomerRating(String cutomerRating){
-        if(cutomerRating.equals("5.0")){
-            return true;
-        }
-        Pattern p = Pattern.compile("[1-4].[0-9]");
-        Matcher m = p.matcher(cutomerRating);
-        return (m.find() && m.group().equals(cutomerRating));
-    }
-
-    //To sort the HashMap by values.
-    public Map<String,Integer> sortMapByValues(Map<String,Integer> map){
-
-        // Create a list from elements of itemCountMap
-        List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
-
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return (o2.getValue().compareTo(o1.getValue()));
-            }
-        });
-
-        //Creating the Sorted HashMap
-        Map<String, Integer> sortedByValueMap = new LinkedHashMap<String, Integer>();
-        for (Map.Entry<String, Integer> item : list) {
-            sortedByValueMap.put(item.getKey(), item.getValue());
-        }
-
-        return sortedByValueMap;
-    }
-
 }
 

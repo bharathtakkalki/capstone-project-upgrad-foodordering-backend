@@ -13,10 +13,10 @@ public class ItemDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //To get Item by ItemUUId from the db
-    public ItemEntity getItemByUUID(String itemUuid) {
+    //To get ItemEntity by its UUID if no result then null is returned.
+    public ItemEntity getItemByUUID(String uuid) {
         try {
-            ItemEntity itemEntity = entityManager.createNamedQuery("getItemByUUID",ItemEntity.class).setParameter("uuid",itemUuid).getSingleResult();
+            ItemEntity itemEntity = entityManager.createNamedQuery("getItemByUUID",ItemEntity.class).setParameter("uuid",uuid).getSingleResult();
             return itemEntity;
         }catch (NoResultException nre){
             return null;

@@ -16,11 +16,11 @@ public class OrderItemDao {
     private EntityManager entityManager;
 
 
-
-    public List getItemsByPopularity() {
+    //To get the
+    public List<OrderItemEntity> getItemsByOrders(OrdersEntity ordersEntity) {
         try{
-            List l = entityManager.createNamedQuery("getItemsByPopularity", OrderItemEntity.class).getResultList();
-            return l;
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntities",ordersEntity).getResultList();
+            return orderItemEntities;
         }catch (NoResultException nre) {
             return null;
         }
