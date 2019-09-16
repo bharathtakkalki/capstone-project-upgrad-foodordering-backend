@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the CategoryItem table in the DB
 
@@ -16,7 +17,7 @@ import javax.validation.constraints.Size;
 
         @NamedQuery(name = "getItemsByCategory",query = "SELECT c FROM CategoryItemEntity c WHERE c.category = :category ORDER BY LOWER(c.item.itemName) ASC "),
 })
-public class CategoryItemEntity {
+public class CategoryItemEntity implements Serializable {
 
 
 

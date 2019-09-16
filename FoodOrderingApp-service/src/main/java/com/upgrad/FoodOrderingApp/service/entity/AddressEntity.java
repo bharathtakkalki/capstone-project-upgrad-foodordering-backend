@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the Address table in the DB.
 
@@ -18,7 +19,7 @@ import javax.validation.constraints.Size;
 
         @NamedQuery(name = "getAddressByUuid",query = "SELECT a from AddressEntity a where a.uuid = :uuid"),
 })
-public class AddressEntity {
+public class AddressEntity implements Serializable {
 
 
     @Id

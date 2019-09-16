@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 //This Class represents the OrderItem table in the DB
 
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull;
         @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :ordersEntity"),
 
 })
-public class OrderItemEntity {
+public class OrderItemEntity implements Serializable {
 
 
     @Id

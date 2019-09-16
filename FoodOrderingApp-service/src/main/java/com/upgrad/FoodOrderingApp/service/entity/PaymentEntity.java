@@ -4,6 +4,7 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the Payment table in the DB
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
         @NamedQuery(name = "getPaymentByUUID",query = "SELECT p FROM PaymentEntity p WHERE p.uuid = :uuid"),
         @NamedQuery(name = "getAllPaymentMethods",query = "SELECT p FROM PaymentEntity p")
 })
-public class PaymentEntity {
+public class PaymentEntity implements Serializable {
 
 
     @Id

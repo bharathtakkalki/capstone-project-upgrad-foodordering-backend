@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the RestaurantItem table in the DB
 
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
         @NamedQuery(name = "getItemsByRestaurant",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY LOWER(r.item.itemName) ASC "),
 })
-public class RestaurantItemEntity {
+public class RestaurantItemEntity implements Serializable {
 
     @Id
     @Column(name = "id")

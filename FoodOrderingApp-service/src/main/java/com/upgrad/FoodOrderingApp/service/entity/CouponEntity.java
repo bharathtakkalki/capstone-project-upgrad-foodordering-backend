@@ -4,6 +4,7 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 //This Class represents the Coupon table in the DB
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
         @NamedQuery(name = "getCouponByCouponName",query = "SELECT c FROM CouponEntity c WHERE c.couponName = :coupon_name"),
         @NamedQuery(name = "getCouponByCouponId",query = "SELECT c FROM  CouponEntity c WHERE c.uuid = :uuid"),
 })
-public class CouponEntity {
+public class CouponEntity implements Serializable {
 
     @Id
     @Column(name = "id")
