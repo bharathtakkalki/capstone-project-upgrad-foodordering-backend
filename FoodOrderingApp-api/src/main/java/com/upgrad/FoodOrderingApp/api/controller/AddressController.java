@@ -144,6 +144,7 @@ public class AddressController {
     /*  The method handles States request.It produces response in StatesListResponse and returns UUID & stateName .If error Return error code and error Message.
    */
     @RequestMapping(method = RequestMethod.GET,path = "/states",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
     public ResponseEntity<StatesListResponse> getAllStates(){
 
         //Calls getAllStates method in addressService and returns list of stateEntity.
