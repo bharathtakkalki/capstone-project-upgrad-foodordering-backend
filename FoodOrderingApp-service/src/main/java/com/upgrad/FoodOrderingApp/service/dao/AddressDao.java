@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+//This Class is created to access DB with respect to Address entity
+
 @Repository
 public class AddressDao {
 
@@ -15,12 +17,13 @@ public class AddressDao {
     private EntityManager entityManager;
 
 
-
+    //To save the address
     public AddressEntity saveAddress(AddressEntity addressEntity){
         entityManager.persist(addressEntity);
         return addressEntity;
     }
 
+    //To get address by UUID if no results null is returned.
     public AddressEntity getAddressByUuid(String uuid){
         try{
             AddressEntity addressEntity = entityManager.createNamedQuery("getAddressByUuid",AddressEntity.class).setParameter("uuid",uuid).getSingleResult();
@@ -30,6 +33,7 @@ public class AddressDao {
         }
     }
 
+    //To delete the Address.
     public AddressEntity deleteAddress(AddressEntity addressEntity) {
         entityManager.remove(addressEntity);
         return addressEntity;

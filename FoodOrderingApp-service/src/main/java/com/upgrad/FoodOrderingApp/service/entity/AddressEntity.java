@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//This Class represents the Address table in the DB.
+
+
 @Entity
 @Table (name = "address",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
 @NamedQueries({

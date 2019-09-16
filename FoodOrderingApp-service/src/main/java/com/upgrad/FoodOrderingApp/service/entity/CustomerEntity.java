@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-
+//This Class represents the Customer table in the DB.
 
 @Entity
 @Table(name = "customer",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid","contact_number"})})

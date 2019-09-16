@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+//This Class represents the CustomerAddress table in the DB.
 
 @Entity
 @Table(name = "customer_address")
