@@ -1,6 +1,7 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 
+import com.upgrad.FoodOrderingApp.api.model.ItemList;
 import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/item")
@@ -33,7 +35,15 @@ public class ItemController {
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
         List<ItemEntity> itemEntities = itemService.getItemsByPopularity(restaurantEntity);
-
-        return new ResponseEntity<ItemListResponse>(HttpStatus.OK);
+        ItemListResponse itemListResponse = new ItemListResponse();
+        itemEntities.forEach(itemEntity -> {
+            ItemList itemList = new ItemList()
+                    .id(UUID.fromString(itemEntity.getUuid()))
+                    .itemName(itemEntity.getitemName())
+                    .price(itemEntity.getPrice())
+                    .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
+            itemListResponse.add(itemList);
+        });
+        return new ResponseEntity<ItemListResponse>(itemListResponse,HttpStatus.OK);
     }
 }

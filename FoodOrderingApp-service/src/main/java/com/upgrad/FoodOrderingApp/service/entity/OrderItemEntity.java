@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "order_item")
 @NamedQueries({
 
-        @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order IN (:ordersEntities)"),
+        @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :ordersEntities"),
 })
 public class OrderItemEntity {
 
