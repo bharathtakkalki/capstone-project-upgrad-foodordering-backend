@@ -1,4 +1,4 @@
-/*package com.upgrad.FoodOrderingApp.api.controller;
+package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
@@ -432,6 +432,7 @@ public class CustomerControllerTest {
 
     //This test case passes when you have handled the exception of trying to update your password but you are already
     // logged out.
+    @Test
     public void shouldUpdateCustomerPasswordIfCustomerIsAlreadyLoggedOut() throws Exception {
         when(mockCustomerService.getCustomer("auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
@@ -449,6 +450,7 @@ public class CustomerControllerTest {
 
     //This test case passes when you have handled the exception of trying to update your password but your session is
     // already expired.
+    @Test
     public void shouldUpdateCustomerPasswordIfSessionIsExpired() throws Exception {
         when(mockCustomerService.getCustomer("auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
@@ -483,4 +485,4 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).updateCustomerPassword("oldPwd", "newPwd", customerEntity);
     }
 
-}*/
+}
