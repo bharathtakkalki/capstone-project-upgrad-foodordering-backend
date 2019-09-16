@@ -25,7 +25,7 @@ import java.util.UUID;
 public class PaymentController {
 
     @Autowired
-    PaymentService paymentService;
+    PaymentService paymentService; // Handles all the Service Related to Payment.
 
 
     /* The method handles get all payment methods fro the order.

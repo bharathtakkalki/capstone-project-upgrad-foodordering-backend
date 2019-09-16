@@ -9,6 +9,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+//This Class is created to access DB with respect to Restaurant entity
+
 @Repository
 public class RestaurantDao {
 
@@ -38,9 +40,8 @@ public class RestaurantDao {
     //To get the list of restaurant by name from db
     public List<RestaurantEntity> restaurantsByName(String restaurantName) {
         try {
-            String restaurantNameLow = "%"+restaurantName.toLowerCase()+"%"; // to make a check with lower and upper case names.
-            String restaurantNameCaps = "%" + restaurantName + "%";
-            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurantsByName", RestaurantEntity.class).setParameter("restaurant_name_caps", restaurantNameCaps).setParameter("restaurant_name_low",restaurantNameLow).getResultList();
+            String restaurantNameLow = "%"+restaurantName.toLowerCase()+"%"; // to make a check with lower
+            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurantsByName", RestaurantEntity.class).setParameter("restaurant_name_low",restaurantNameLow).getResultList();
             return restaurantEntities;
         }catch (NoResultException nre){
             return null;

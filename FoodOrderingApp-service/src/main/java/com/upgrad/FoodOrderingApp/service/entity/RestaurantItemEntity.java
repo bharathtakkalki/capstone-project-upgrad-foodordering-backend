@@ -8,10 +8,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//This Class represents the RestaurantItem table in the DB
+
 @Entity
 @Table(name = "restaurant_item")
 @NamedQueries({
-        @NamedQuery(name = "getItemsByRestaurant",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY r.item.itemName ASC "),
+        @NamedQuery(name = "getItemsByRestaurant",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY LOWER(r.item.itemName) ASC "),
 })
 public class RestaurantItemEntity {
 
@@ -26,7 +28,7 @@ public class RestaurantItemEntity {
     @NotNull
     private ItemEntity item;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull

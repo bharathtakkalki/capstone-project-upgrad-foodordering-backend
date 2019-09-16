@@ -9,6 +9,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+//This Class is created to access DB with respect to OrderItem entity
+
 @Repository
 public class OrderItemDao {
 
@@ -19,7 +21,7 @@ public class OrderItemDao {
     //To get the
     public List<OrderItemEntity> getItemsByOrders(OrdersEntity ordersEntity) {
         try{
-            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntities",ordersEntity).getResultList();
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntity",ordersEntity).getResultList();
             return orderItemEntities;
         }catch (NoResultException nre) {
             return null;

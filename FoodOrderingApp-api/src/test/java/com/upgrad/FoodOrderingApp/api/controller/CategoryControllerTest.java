@@ -39,7 +39,7 @@ public class CategoryControllerTest {
     @MockBean
     private CategoryService mockCategoryService;
 
-/*    //This test case passes when you have are able to fetch any category by its id.
+   //This test case passes when you have are able to fetch any category by its id.
     @Test
     public void shouldGetCategoryById() throws Exception {
         final ItemEntity itemEntity = new ItemEntity();
@@ -71,7 +71,7 @@ public class CategoryControllerTest {
         assertEquals(categoryDetailsResponse.getItemList().get(0).getItemType().toString(), "NON_VEG");
         verify(mockCategoryService, times(1)).getCategoryById("sampleCategoryId");
     }
-*/
+
     //This test case passes when you have handled the exception of trying to fetch any category but your category id
     // field is empty.
     @Test

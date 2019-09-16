@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+//This Class handles all service related to the Payment
+
 @Service
 public class PaymentService {
 

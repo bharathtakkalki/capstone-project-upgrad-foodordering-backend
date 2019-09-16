@@ -8,6 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+//This Class is created to access DB with respect to Category entity
+
 @Repository
 public class CategoryDao {
 

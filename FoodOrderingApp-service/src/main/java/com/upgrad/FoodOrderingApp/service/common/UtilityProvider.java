@@ -1,14 +1,14 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.common;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
-import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
+import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+//This Class Provides various utilities.
 
 @Component
 public class UtilityProvider {
@@ -100,7 +100,6 @@ public class UtilityProvider {
         }
     }
 
-
     //To validate Customer update request
     public boolean isValidUpdateCustomerRequest (String firstName)throws UpdateCustomerException {
         if (firstName == null || firstName == "") {
@@ -119,5 +118,39 @@ public class UtilityProvider {
         }
         return true;
     }
+
+    //To validate the Customer rating
+    public boolean isValidCustomerRating(String cutomerRating){
+        if(cutomerRating.equals("5.0")){
+            return true;
+        }
+        Pattern p = Pattern.compile("[1-4].[0-9]");
+        Matcher m = p.matcher(cutomerRating);
+        return (m.find() && m.group().equals(cutomerRating));
+    }
+
+    //To sort the HashMap by values.
+    public Map<String,Integer> sortMapByValues(Map<String,Integer> map){
+
+        // Create a list from elements of itemCountMap
+        List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return (o2.getValue().compareTo(o1.getValue()));
+            }
+        });
+
+        //Creating the Sorted HashMap
+        Map<String, Integer> sortedByValueMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> item : list) {
+            sortedByValueMap.put(item.getKey(), item.getValue());
+        }
+
+        return sortedByValueMap;
+    }
+
 }
 

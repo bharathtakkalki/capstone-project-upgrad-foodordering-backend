@@ -8,13 +8,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
+//This Class represents the Restaurant table in the DB
+
 @Entity
 @Table(name = "restaurant",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
 @NamedQueries({
 
         @NamedQuery(name = "restaurantsByRating",query = "SELECT r FROM RestaurantEntity r ORDER BY r.customerRating DESC"),
         @NamedQuery(name = "getRestaurantByUuid",query = "SELECT r FROM RestaurantEntity r WHERE r.uuid = :uuid"),
-        @NamedQuery(name = "restaurantsByName",query = "SELECT r FROM  RestaurantEntity r WHERE r.restaurantName LIKE :restaurant_name_caps OR r.restaurantName LIKE :restaurant_name_low"),
+        @NamedQuery(name = "restaurantsByName",query = "SELECT r FROM  RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :restaurant_name_low"),
 })
 public class RestaurantEntity {
 

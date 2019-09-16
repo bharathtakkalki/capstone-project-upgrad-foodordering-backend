@@ -1,10 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.service.common.UitilityProvider;
-import com.upgrad.FoodOrderingApp.service.dao.AddressDao;
-import com.upgrad.FoodOrderingApp.service.dao.CustomerAddressDao;
-import com.upgrad.FoodOrderingApp.service.dao.CustomerAuthDao;
-import com.upgrad.FoodOrderingApp.service.dao.StateDao;
+import com.upgrad.FoodOrderingApp.service.common.UtilityProvider;
+import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
@@ -35,6 +32,9 @@ public class AddressService {
 
     @Autowired
     CustomerAddressDao customerAddressDao; //Handles all Data of CustomerAddressEntity
+
+    @Autowired
+    OrderDao orderDao; //Handles all Data of Orders Entity
 
     /* This method is to saveAddress.Takes the Address and state entity and saves the Address to the DB.
     If error throws exception with error code and error message.
@@ -138,9 +138,22 @@ public class AddressService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public AddressEntity deleteAddress(AddressEntity addressEntity) {
-        //Calls deleteAddress of addressDao to delete the corresponding address.
-        AddressEntity deletedAddressEntity = addressDao.deleteAddress(addressEntity);
-        return deletedAddressEntity;
+
+        //Calls getOrdersByAddress of orderDao to orders with corresponding address.
+        List<OrdersEntity> ordersEntities = orderDao.getOrdersByAddress(addressEntity);
+
+        if(ordersEntities == null||ordersEntities.isEmpty()) { //Checking if no orders are present with this address.
+            //Calls deleteAddress of addressDao to delete the corresponding address.
+            AddressEntity deletedAddressEntity = addressDao.deleteAddress(addressEntity);
+            return deletedAddressEntity;
+        }else{
+            //Updating the active status
+            addressEntity.setActive(0);
+
+            //Calls updateAddressActiveStatus method of addressDao to update address active status.
+            AddressEntity updatedAddressActiveStatus =  addressDao.updateAddressActiveStatus(addressEntity);
+            return updatedAddressActiveStatus;
+        }
     }
 
     /*This method is to getAllStates in DB.

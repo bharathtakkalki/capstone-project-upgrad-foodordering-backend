@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+//This Class is created to access DB with respect to Coupon entity
+
 @Repository
 public class CouponDao {
 

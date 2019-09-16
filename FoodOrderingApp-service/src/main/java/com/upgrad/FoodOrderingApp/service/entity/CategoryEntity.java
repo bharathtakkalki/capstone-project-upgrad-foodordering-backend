@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+//This Class represents the Category table in the DB
+
 @Entity
 @Table(name = "category",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
 @NamedQueries({
@@ -33,6 +35,8 @@ public class CategoryEntity implements Serializable {
     @Size(max = 255)
     private String categoryName;
 
+
+    //Created direct relation as the Test Mockito expects ListOf items as a variable in CategoryEntity.
     @ManyToMany
     @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))

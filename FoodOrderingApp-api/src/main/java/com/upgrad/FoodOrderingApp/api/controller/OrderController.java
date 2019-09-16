@@ -166,18 +166,12 @@ public class OrderController {
                 //Creating ItemQuantitiesResponse List
                 List<ItemQuantityResponse> itemQuantityResponseList = new LinkedList<>();
                 orderItemEntities.forEach(orderItemEntity -> {          //Looping for every item in the order to get details of the item ordered
-                    if(orderItemEntity.getItem().getType().equals("0")){
-                        orderItemEntity.getItem().setType("VEG");
-                    }else {
-                        orderItemEntity.getItem().setType("NON_VEG");
-                    }
-
                     //Creating new ItemQuantityResponseItem
                     ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem()
                             .itemName(orderItemEntity.getItem().getitemName())
                             .itemPrice(orderItemEntity.getItem().getPrice())
                             .id(UUID.fromString(orderItemEntity.getItem().getUuid()))
-                            .type(ItemQuantityResponseItem.TypeEnum.valueOf(orderItemEntity.getItem().getType()));
+                            .type(ItemQuantityResponseItem.TypeEnum.valueOf(orderItemEntity.getItem().getType().getValue()));
                     //Creating ItemQuantityResponse which will be added to the list
                     ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse()
                             .item(itemQuantityResponseItem)

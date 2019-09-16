@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+//This Class represents the ItemEntity table in the DB
+
 @Entity
 @Table(name = "item",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
 @NamedQueries({

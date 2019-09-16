@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-// Restaurant Controller Handles all  the restaurant related endpoints
+// Category Controller Handles all  the Category related endpoints
 
 @RestController
 @RequestMapping("/category")

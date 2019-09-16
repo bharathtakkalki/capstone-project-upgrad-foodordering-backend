@@ -1,6 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.service.common.UitilityProvider;
+import com.upgrad.FoodOrderingApp.service.common.UtilityProvider;
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantCategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
@@ -19,6 +19,8 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+//This Class handles all service related to the Restaurant.
+
 @Service
 public class RestaurantService {
 
@@ -32,7 +34,7 @@ public class RestaurantService {
     CategoryDao categoryDao;  //Handles all data related to the CategoryEntity
 
     @Autowired
-    UitilityProvider uitilityProvider; // It Provides Data Check methods for various cases
+    UtilityProvider utilityProvider; // It Provides Data Check methods for various cases
 
 
 
@@ -113,17 +115,17 @@ public class RestaurantService {
    */
     @Transactional(propagation = Propagation.REQUIRED)
     public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity, Double customerRating) throws InvalidRatingException {
-        if(!uitilityProvider.isValidCustomerRating(customerRating.toString())){ //Checking for the rating to be valid
+        if(!utilityProvider.isValidCustomerRating(customerRating.toString())){ //Checking for the rating to be valid
             throw new InvalidRatingException("IRE-001","Restaurant should be in the range of 1 to 5");
         }
         //Finding the new Customer rating adn updating it.
         DecimalFormat format = new DecimalFormat("##.0"); //keeping format to one decimal
         double restaurantRating = restaurantEntity.getCustomerRating();
-        Integer restaurantNoOfCustomerrated = restaurantEntity.getNumberCustomersRated();
-        restaurantEntity.setNumberCustomersRated(restaurantNoOfCustomerrated+1);
+        Integer restaurantNoOfCustomerRated = restaurantEntity.getNumberCustomersRated();
+        restaurantEntity.setNumberCustomersRated(restaurantNoOfCustomerRated+1);
 
-        //calculating the new customer rating as per the given data and fromula
-        double newCustomerRating = (restaurantRating*(restaurantNoOfCustomerrated.doubleValue())+customerRating)/restaurantEntity.getNumberCustomersRated();
+        //calculating the new customer rating as per the given data and formula
+        double newCustomerRating = (restaurantRating*(restaurantNoOfCustomerRated.doubleValue())+customerRating)/restaurantEntity.getNumberCustomersRated();
 
         restaurantEntity.setCustomerRating(Double.parseDouble(format.format(newCustomerRating)));
 

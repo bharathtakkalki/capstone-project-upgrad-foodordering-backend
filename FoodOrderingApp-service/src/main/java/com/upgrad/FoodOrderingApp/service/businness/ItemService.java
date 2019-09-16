@@ -1,7 +1,6 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.service.common.ItemType;
-import com.upgrad.FoodOrderingApp.service.common.UitilityProvider;
+import com.upgrad.FoodOrderingApp.service.common.UtilityProvider;
 import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+//This Class handles all service related to the Item
 
 @Service
 public class ItemService {
@@ -35,7 +35,7 @@ public class ItemService {
     OrderDao orderDao;
 
     @Autowired
-    UitilityProvider uitilityProvider;
+    UtilityProvider utilityProvider;
 
 
     /* This method is to get Items By Category And Restaurant and returns list of ItemEntity it takes restaurantUuid & categoryUuid as input.
@@ -96,13 +96,13 @@ public class ItemService {
        });
 
        //Calls sortMapByValues method of uitilityProvider and get sorted map by value.
-       Map<String,Integer> sortedItemCountMap = uitilityProvider.sortMapByValues(itemCountMap);
+       Map<String,Integer> sortedItemCountMap = utilityProvider.sortMapByValues(itemCountMap);
 
        //Creating the top 5 Itementity list
         List<ItemEntity> sortedItemEntites = new LinkedList<>();
         Integer count = 0;
         for(Map.Entry<String,Integer> item:sortedItemCountMap.entrySet()){
-            if(count <= 5) {
+            if(count < 5) {
                 //Calls getItemByUUID to get the Itemtentity
                 sortedItemEntites.add(itemDao.getItemByUUID(item.getKey()));
                 count = count+1;

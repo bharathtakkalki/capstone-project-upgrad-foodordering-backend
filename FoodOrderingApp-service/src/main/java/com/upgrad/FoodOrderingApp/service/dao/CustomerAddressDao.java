@@ -28,7 +28,8 @@ public class CustomerAddressDao {
     //To get all customer address by customer if no results return null
     public List<CustomerAddressEntity> getAllCustomerAddressByCustomer(CustomerEntity customerEntity){
         try{
-           List <CustomerAddressEntity> customerAddressEntities = entityManager.createNamedQuery("getAllCustomerAddressByCustomer",CustomerAddressEntity.class).setParameter("customer_entity",customerEntity).getResultList();
+            Integer active = 1;
+           List <CustomerAddressEntity> customerAddressEntities = entityManager.createNamedQuery("getAllCustomerAddressByCustomer",CustomerAddressEntity.class).setParameter("customer_entity",customerEntity).setParameter("active",active).getResultList();
             return customerAddressEntities;
         }catch (NoResultException nre){
             return null;

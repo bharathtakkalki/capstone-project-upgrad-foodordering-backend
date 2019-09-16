@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.UUID;
 
+//This Class is created to access DB with respect to Payment entity
+
 @Repository
 public class PaymentDao {
 

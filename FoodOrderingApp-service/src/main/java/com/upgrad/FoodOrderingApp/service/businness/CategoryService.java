@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 
+//This Class handles all service related to the Category.
 
 @Service
 public class CategoryService {

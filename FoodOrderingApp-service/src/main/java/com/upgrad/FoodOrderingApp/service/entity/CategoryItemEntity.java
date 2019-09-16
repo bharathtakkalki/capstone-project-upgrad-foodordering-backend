@@ -8,11 +8,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//This Class represents the CategoryItem table in the DB
+
 @Entity
 @Table(name = "category_item")
 @NamedQueries({
 
-        @NamedQuery(name = "getItemsByCategory",query = "SELECT c FROM CategoryItemEntity c WHERE c.category = :category ORDER BY c.item.itemName ASC "),
+        @NamedQuery(name = "getItemsByCategory",query = "SELECT c FROM CategoryItemEntity c WHERE c.category = :category ORDER BY LOWER(c.item.itemName) ASC "),
 })
 public class CategoryItemEntity {
 

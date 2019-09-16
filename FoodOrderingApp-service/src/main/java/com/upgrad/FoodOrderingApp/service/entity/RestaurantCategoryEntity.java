@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.AbstractCollection;
 
+//This Class represents the RestaurantCategory table in the DB
+
 @Entity
 @Table(name = "restaurant_category")
 @NamedQueries({
@@ -24,7 +26,7 @@ public class RestaurantCategoryEntity {
     private Integer id;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
