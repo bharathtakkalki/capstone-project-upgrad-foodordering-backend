@@ -16,6 +16,7 @@ public class RestaurantItemDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //To get the list of RestaurantItemEntity using Restaurant entity if no results then returns null.
     public List<RestaurantItemEntity> getItemsByRestaurant(RestaurantEntity restaurantEntity) {
         try {
             List<RestaurantItemEntity> restaurantItemEntities = entityManager.createNamedQuery("getItemsByRestaurant",RestaurantItemEntity.class).setParameter("restaurant",restaurantEntity).getResultList();

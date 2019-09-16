@@ -16,6 +16,7 @@ public class CategoryItemDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //To get List of CategoryItemEntity by CategoryEntity if no result then null is returned
     public List<CategoryItemEntity> getItemsByCategory(CategoryEntity categoryEntity) {
         try {
             List<CategoryItemEntity> categoryItemEntities = entityManager.createNamedQuery("getItemsByCategory",CategoryItemEntity.class).setParameter("category",categoryEntity).getResultList();

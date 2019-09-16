@@ -16,7 +16,7 @@ public class OrderItemDao {
     private EntityManager entityManager;
 
 
-
+    //To get the
     public List<OrderItemEntity> getItemsByOrders(OrdersEntity ordersEntity) {
         try{
             List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntities",ordersEntity).getResultList();

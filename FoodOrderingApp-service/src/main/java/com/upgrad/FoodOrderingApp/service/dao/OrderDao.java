@@ -18,8 +18,7 @@ public class OrderDao {
     private EntityManager entityManager;
 
 
-
-
+    //To get list of OrdersEntity by the restaurant if no result then null is returned
     public List<OrdersEntity> getOrdersByRestaurant(RestaurantEntity restaurantEntity){
         try{
             List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByRestaurant",OrdersEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
